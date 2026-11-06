@@ -78,17 +78,3 @@ make all        # all variants
 make check      # compare every variant against naive (tolerance 1e-4)
 OMP_NUM_THREADS=8 OMP_PROC_BIND=spread OMP_PLACES=threads make omp
 ```
-
-## Repository layout
-
-```
-src/                      attn_naive.c and all variants
-input/                    the given inputs
-machine_spec.txt          machine details and derived peaks
-results.csv               time, GFLOP/s, AI and check result for every run
-plots/roofline.png        roofline with all variants
-plots/time_N<N>_d<d>.png  time of every variant per input
-Makefile
-assignment_handout.pdf
-report.pdf                answers to Q1–Q5
-```
