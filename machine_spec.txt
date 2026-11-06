@@ -1,0 +1,30 @@
+# Machine specification (Q1). Fill in every field; give units. Fill in N/A if not applicable.
+
+CPU model                       : AMD Ryzen 7 5800X 8-Core Processor (family 25, model 33, stepping 2)
+Microarchitecture               : AMD Zen 3 (Vermeer), one CCX of 8 cores, 1 socket, 1 NUMA node
+Physical cores                  : 8
+Logical cores (hardware threads): 16 (2-way SMT; siblings are CPU n and n+8)
+Performance / efficiency cores  : N/A (8 identical cores; no hybrid P/E design)
+Base clock (GHz)                : 3.8 GHz
+Max single-core clock (GHz)     : 4.85 GHz max boost (cpufreq 4851471 kHz); measured 4.83 GHz under 1-thread AVX2 FMA load
+All-core clock under load (GHz) : 4.66 GHz (measured, 8 threads one per core, AVX2 FMA load)
+SIMD instruction set and width  : AVX2 + FMA3, 256-bit (8 x FP32); no AVX-512
+FMA units per core              : 2 x 256-bit FMA pipes (AMD Zen 3 docs; measured 98.5% of 32 FLOP/cycle confirms 2)
+Vector registers per core       : 16 x 256-bit YMM architectural registers per hardware thread
+L1 data cache (per core)        : 32 KiB, 8-way, 64 B lines (shared by the core's 2 SMT threads)
+L2 cache (size, shared by)      : 512 KiB per core, 8-way, private to 1 core (its 2 SMT threads)
+L3 cache (size, shared by)      : 32 MiB, 16-way, shared by all 8 cores (16 threads)
+Cache line size (bytes)         : 64
+RAM size (GB)                   : 32 GB (one 32 GB DIMM)
+RAM type, speed (MT/s), channels: DDR4, 3200 MT/s, 1 channel (single dual-rank DIMM in DIMM_A2)
+Operating system                : Ubuntu 22.04.5 LTS, Linux 6.8.0-138-generic, x86_64
+Compiler and version            : Ubuntu clang 14.0.0-1ubuntu1.1 (-O3 -march=native = znver3; -fopenmp with libomp 14)
+
+# Derived (show the calculation in report.pdf)
+Peak FP32 GFLOP/s, one core     : 154.7 theoretical (8 lanes x 2 FMA x 2 FLOP x 4.834 GHz); 152.4 measured
+Peak FP32 GFLOP/s, all cores    : 1192 theoretical (8 cores x 32 FLOP/cycle x 4.658 GHz); 1179.3 measured
+Memory bandwidth (GB/s)         : 25.6 theoretical (1 channel x 8 B x 3200 MT/s); 16.1 measured (triad, 1 thread), 15.2 (8 threads)
+Ridge point, one core (FLOP/B)  : 6.0 theoretical (154.7 / 25.6); 9.5 measured (152.4 / 16.1)
+Ridge point, all cores (FLOP/B) : 46.6 theoretical (1192 / 25.6); 77.6 measured (1179.3 / 15.2)
+
+
